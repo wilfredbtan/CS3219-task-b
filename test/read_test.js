@@ -14,5 +14,5 @@ describe('Reading cat details', () => {
             assert(cat.name === 'Tom');
             done();
         });
-    });
+    }).timeout(10000); // Longer timeout needed as server may be sleeping
 });

@@ -1,9 +1,13 @@
 import React, { Fragment } from 'react';
 import './App.css';
 
+import CatList from './containers/CatList/CatList';
+import Form from './containers/Form/Form';
+
 const App = () => (
   <Fragment>
-    <h1>App</h1>
+    <Form />
+    <CatList />
   </Fragment>
 );
 

@@ -20,11 +20,6 @@ describe('Updating a cat', () => {
             });
     }
 
-    it('Sets and saves cat using an instance', (done) => {
-        cat.set('name', 'Jerry');
-        assertHelper(cat.save(), done);
-    });
-
     it('Updates cat using instance', (done) => {
         assertHelper(cat.updateOne({ name: 'Jerry' }), done);
     });

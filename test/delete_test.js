@@ -16,7 +16,7 @@ describe('Deleting a cat', () => {
                 assert(cat === null);
                 done();
             });
-    }).timeout(10000); // Longer timeout needed as server may be sleeping
+    });
 
     it('Removes a cat', (done) => {
         Cat.findOneAndDelete({ name: 'Tom' })

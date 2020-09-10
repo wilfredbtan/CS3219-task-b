@@ -1,6 +1,5 @@
 const assert = require('assert');
 const Cat = require('../src/models/cat');
-const { RSA_PKCS1_OAEP_PADDING } = require('constants');
 
 describe('Creating cats', () => {
     it('creates a cat', (done) => {
@@ -9,5 +8,5 @@ describe('Creating cats', () => {
             assert(!cat.isNew); // if cat is saved to db it is not new
             done();
         });
-    }).timeout(10000); // Longer timeout needed as server may be sleeping
+    });
 });

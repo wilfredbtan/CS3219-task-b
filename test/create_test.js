@@ -9,5 +9,5 @@ describe('Creating cats', () => {
             assert(!cat.isNew); // if cat is saved to db it is not new
             done();
         });
-    });
+    }).timeout(10000); // Longer timeout needed as server may be sleeping
 });

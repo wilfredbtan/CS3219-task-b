@@ -27,16 +27,16 @@ describe('Updating a cat', () => {
 
     it('Updates cat using instance', (done) => {
         assertHelper(cat.updateOne({ name: 'Jerry' }), done);
-    });
+    }).timeout(10000); // Longer timeout needed as server may be sleeping
 
     it('Updates all one cat using model', (done) => {
         assertHelper(
             Cat.findOneAndUpdate({ name: 'Tom' }, { name: 'Jerry' }),
             done
         );
-    });
+    }).timeout(10000); // Longer timeout needed as server may be sleeping
 
     it('Updates one cat with id using model', (done) => {
         assertHelper(Cat.findByIdAndUpdate(cat._id, { name: 'Jerry' }), done);
-    });
+    }).timeout(10000); // Longer timeout needed as server may be sleeping
 });

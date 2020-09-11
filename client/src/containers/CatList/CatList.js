@@ -7,7 +7,7 @@ const CatList = (props) => {
   return (
     <div>
       {cats.map((cat) => (
-        <CatListItem name={cat.name} />
+        <CatListItem name={cat.name} key={cat.name} />
       ))}
     </div>
   );

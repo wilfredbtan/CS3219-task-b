@@ -1,16 +1,28 @@
 import React from 'react';
-import CatListItem from '../CatListItem/CatListItem';
+import PropTypes from 'prop-types';
 
-const cats = [{ name: 'Tom' }, { name: 'Bob' }, { name: 'Swag' }];
+import CatListItem from '../CatListItem/CatListItem';
+import './CatList.css';
 
 const CatList = (props) => {
   return (
-    <div>
-      {cats.map((cat) => (
-        <CatListItem name={cat.name} key={cat.name} />
-      ))}
-    </div>
+    <section className="cat-list">
+      <h2>Owned Cats</h2>
+      <ul>
+        {props.cats.map((cat) => (
+          <li key={cat.id} onClick={props.onRemoveCat.bind(this, cat.id)}>
+            <span>
+              <b>{cat.name}</b> the {cat.breed}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
+};
+
+CatList.propTypes = {
+  cats: PropTypes.array.isRequired,
 };
 
 export default CatList;

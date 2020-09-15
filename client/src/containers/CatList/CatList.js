@@ -13,6 +13,7 @@ const CatList = (props) => {
             <span>
               <b>{cat.name}</b> the {cat.breed}
             </span>
+            <button>delete</button>
           </li>
         ))}
       </ul>

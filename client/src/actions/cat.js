@@ -3,8 +3,14 @@ import axios from 'axios';
 import * as actionTypes from './actionsTypes';
 
 export const initCats = () => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
   axios
-    .get('/cats')
+    .get('/cats', config)
     .then((response) => {
       const responseData = response.data;
       // console.log('get cat success');
@@ -36,6 +42,7 @@ export const addCat = (name, breed) => (dispatch) => {
   };
 
   const body = JSON.stringify({ name, breed });
+  console.log(body);
 
   axios
     .post('/cats', body, config)

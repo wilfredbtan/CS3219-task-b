@@ -16,7 +16,6 @@ const addCat = (state, payload) => {
 
 const deleteCat = (state, payload) => {
   let updatedCats = [...state.cats].filter((cat) => cat.id !== payload.id);
-  // const updatedState = {};
   console.log('delete reducer: ' + state);
   return updateObject(state, { cats: updatedCats });
 };

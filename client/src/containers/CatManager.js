@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CatList from './CatList/CatList';
@@ -6,8 +6,6 @@ import CatForm from './CatForm/CatForm';
 import { initCats, deleteCat } from '../actions/cat';
 
 const CatManager = () => {
-  // const [cats, setCats] = useState([]);
-
   const dispatch = useDispatch();
   const catState = useSelector((state) => {
     return state.cat.cats;
@@ -19,7 +17,6 @@ const CatManager = () => {
 
   const removeCatHandler = (catId) => {
     dispatch(deleteCat(catId));
-    // setCats((prevCats) => prevCats.filter((cat) => cat.id !== catId));
   };
 
   return (

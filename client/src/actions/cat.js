@@ -1,19 +1,13 @@
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../axios-cats';
 
 import * as actionTypes from './actionsTypes';
 
 export const initCats = () => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
   axios
-    .get('/cats', config)
+    .get('/cats')
     .then((response) => {
       const responseData = response.data;
-      // console.log('get cat success');
 
       const loadedCats = [];
       for (const key in responseData) {
@@ -35,17 +29,10 @@ export const initCats = () => async (dispatch) => {
 };
 
 export const addCat = (name, breed) => (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
   const body = JSON.stringify({ name, breed });
-  // console.log(body);
 
   axios
-    .post('/cats', body, config)
+    .post('/cats', body)
     .then((response) => {
       const id = response.data._id;
       const addedCat = { name, breed, id };
@@ -54,9 +41,6 @@ export const addCat = (name, breed) => (dispatch) => {
         type: actionTypes.ADD_CAT,
         payload: { cat: addedCat },
       });
-
-      // console.log('add cat success');
-      // console.log(response.data.name);
     })
     .catch((error) => {
       console.log('ERROR: Unable to create cat' + error);
@@ -64,22 +48,13 @@ export const addCat = (name, breed) => (dispatch) => {
 };
 
 export const deleteCat = (id) => (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
   axios
-    .delete('/cats/' + id, config)
+    .delete('/cats/' + id)
     .then((response) => {
       dispatch({
         type: actionTypes.DELETE_CAT,
         payload: { id },
       });
-
-      // console.log('delete cat success');
-      // console.log(response.data.name);
     })
     .catch((error) => {
       console.log('ERROR: Unable to delete cat' + error);
@@ -87,17 +62,11 @@ export const deleteCat = (id) => (dispatch) => {
 };
 
 export const updateCat = (id) => (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
   // Change to take in an input
   const body = JSON.stringify({ name: 'updated', breed: 'updated' });
 
   axios
-    .patch('/cats/' + id, body, config)
+    .patch('/cats/' + id, body)
     .then((response) => {
       const { name, breed, _id } = response.data;
       const updatedCat = { name, breed, id: _id };

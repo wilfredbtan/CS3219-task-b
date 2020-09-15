@@ -1,36 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CatList from './CatList/CatList';
 import CatForm from './CatForm/CatForm';
-// import { getCats } from '../actions/cat';
+import { initCats, deleteCat } from '../actions/cat';
 
 const CatManager = () => {
-  const [cats, setCats] = useState([]);
+  // const [cats, setCats] = useState([]);
+
+  const dispatch = useDispatch();
+  const catState = useSelector((state) => {
+    return state.cat.cats;
+  });
 
   useEffect(() => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    axios.get('/cats', config).then((response) => {
-      const responseData = response.data;
-      const loadedCats = [];
-      for (const key in responseData) {
-        loadedCats.push({
-          id: key,
-          name: responseData[key].name,
-          breed: responseData[key].breed,
-        });
-      }
-      setCats(loadedCats);
-    });
-    // getCats()
+    dispatch(initCats());
   }, []);
 
   const removeCatHandler = (catId) => {
-    setCats((prevCats) => prevCats.filter((cat) => cat.id !== catId));
+    dispatch(deleteCat(catId));
+    // setCats((prevCats) => prevCats.filter((cat) => cat.id !== catId));
   };
 
   return (
@@ -38,7 +27,10 @@ const CatManager = () => {
       <CatForm />
 
       <section>
-        <CatList cats={cats} onRemoveCat={removeCatHandler} />
+        <CatList
+          cats={catState ? catState : []}
+          onRemoveCat={removeCatHandler}
+        />
       </section>
     </div>
   );

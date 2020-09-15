@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+// import { connect } from 'react-redux';
 import { addCat } from '../../actions/cat';
 
 import Card from '../../UI/Card';
 import './CatForm.css';
 
-const CatForm = ({ addCat }) => {
+const CatForm = (props) => {
   const [enteredName, setEnteredName] = useState('');
   const [enteredBreed, setEnteredBreed] = useState('');
 
+  const dispatch = useDispatch();
+
+  const onCatAdded = (name, breed) => dispatch(addCat(name, breed));
+
   const submitHandler = (e) => {
-    // e.preventDefault();
-    addCat(enteredName, enteredBreed);
+    e.preventDefault();
+    onCatAdded(enteredName, enteredBreed);
   };
 
   return (
@@ -47,4 +52,4 @@ const CatForm = ({ addCat }) => {
   );
 };
 
-export default connect(null, { addCat })(CatForm);
+export default CatForm;

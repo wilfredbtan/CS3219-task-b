@@ -2,21 +2,28 @@ import * as actionTypes from '../actions/actionsTypes';
 
 const initialState = [];
 
-const initCats = (state, payload) => {
-  return updateObject(state, {
-    cats: payload.cats,
-  });
+const initCats = (state, { cats }) => {
+  return updateObject(state, { cats });
 };
 
-const addCat = (state, payload) => {
+const addCat = (state, { cat }) => {
   let updatedCats = [...state.cats];
-  updatedCats.push(payload.cat);
+  updatedCats.push(cat);
   return updateObject(state, { cats: updatedCats });
 };
 
-const deleteCat = (state, payload) => {
-  let updatedCats = [...state.cats].filter((cat) => cat.id !== payload.id);
-  console.log('delete reducer: ' + state);
+const deleteCat = (state, { id }) => {
+  let updatedCats = [...state.cats].filter((cat) => cat.id !== id);
+  // console.log('delete reducer: ' + state);
+  return updateObject(state, { cats: updatedCats });
+};
+
+const updateCat = (state, { updatedCat }) => {
+  const updatedCats = [...state.cats].map((cat) => {
+    return cat.id === updatedCat.id ? updatedCat : cat;
+  });
+
+  // console.log('update reducer: ' + state);
   return updateObject(state, { cats: updatedCats });
 };
 
@@ -37,6 +44,8 @@ const reducer = (state = initialState, action) => {
       return addCat(state, payload);
     case actionTypes.DELETE_CAT:
       return deleteCat(state, payload);
+    case actionTypes.UPDATE_CAT:
+      return updateCat(state, payload);
     default:
       return state;
   }

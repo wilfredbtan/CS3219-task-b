@@ -42,7 +42,7 @@ export const addCat = (name, breed) => (dispatch) => {
   };
 
   const body = JSON.stringify({ name, breed });
-  console.log(body);
+  // console.log(body);
 
   axios
     .post('/cats', body, config)
@@ -83,5 +83,31 @@ export const deleteCat = (id) => (dispatch) => {
     })
     .catch((error) => {
       console.log('ERROR: Unable to delete cat' + error);
+    });
+};
+
+export const updateCat = (id) => (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Change to take in an input
+  const body = JSON.stringify({ name: 'updated', breed: 'updated' });
+
+  axios
+    .patch('/cats/' + id, body, config)
+    .then((response) => {
+      const { name, breed, _id } = response.data;
+      const updatedCat = { name, breed, id: _id };
+
+      dispatch({
+        type: actionTypes.UPDATE_CAT,
+        payload: { updatedCat },
+      });
+    })
+    .catch((error) => {
+      console.log('ERROR: Unable to update cat' + error);
     });
 };

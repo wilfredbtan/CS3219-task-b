@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import CatList from './CatList/CatList';
 import CatForm from './CatForm/CatForm';
-import { initCats, deleteCat } from '../actions/cat';
+import { initCats, deleteCat, updateCat } from '../actions/cat';
 
 const CatManager = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,10 @@ const CatManager = () => {
   useEffect(() => {
     dispatch(initCats());
   }, []);
+
+  const updateCatHandler = (catId) => {
+    dispatch(updateCat(catId));
+  };
 
   const removeCatHandler = (catId) => {
     dispatch(deleteCat(catId));
@@ -26,6 +30,7 @@ const CatManager = () => {
       <section>
         <CatList
           cats={catState ? catState : []}
+          onUpdateCat={updateCatHandler}
           onRemoveCat={removeCatHandler}
         />
       </section>

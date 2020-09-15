@@ -9,11 +9,16 @@ const CatList = (props) => {
       <h2>Owned Cats</h2>
       <ul>
         {props.cats.map((cat) => (
-          <li key={cat.id} onClick={props.onRemoveCat.bind(this, cat.id)}>
+          <li key={cat.id}>
             <span>
               <b>{cat.name}</b> the {cat.breed}
             </span>
-            <button>delete</button>
+            <button onClick={props.onUpdateCat.bind(this, cat.id)}>
+              update
+            </button>
+            <button onClick={props.onRemoveCat.bind(this, cat.id)}>
+              delete
+            </button>
           </li>
         ))}
       </ul>

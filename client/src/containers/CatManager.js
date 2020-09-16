@@ -14,21 +14,13 @@ const CatManager = () => {
   const dispatch = useDispatch();
 
   const cats = useSelector((state) => state.cat.cats);
-  console.log('cats in manager');
-  console.log(cats);
-
-  // const selectedCat = useSelector((state) => state.cat.selectedCat);
-  // console.log('catId in manager');
-  // console.log(selectedCat);
 
   useEffect(() => {
     dispatch(initCats());
   }, []);
 
   const updateCatHandler = (cat) => {
-    // dispatch(updateCat(updatedCat));
     toggle();
-    console.log('update cat handler: ' + cat.id);
     dispatch(selectCat(cat));
   };
 

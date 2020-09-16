@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCat, updateCat } from '../../actions/cat';
 
@@ -7,9 +7,6 @@ import './CatForm.css';
 
 const CatForm = ({ action, onSubmit }) => {
   const selectedCat = useSelector((state) => state.cat.selectedCat);
-
-  // console.log('catId in form');
-  // console.log(selectedCat);
 
   const [enteredName, setEnteredName] = useState(
     selectedCat ? selectedCat.name : ''
@@ -24,7 +21,9 @@ const CatForm = ({ action, onSubmit }) => {
     e.preventDefault();
     switch (action.toLowerCase()) {
       case 'add':
+        console.log('add cat action');
         dispatch(addCat(enteredName, enteredBreed));
+        break;
       case 'update':
         console.log('update cat action');
         dispatch(updateCat(enteredName, enteredBreed, selectedCat.id));

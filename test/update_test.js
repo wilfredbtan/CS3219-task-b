@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Cat = require('../src/models/Cat');
+const Cat = require('../src/models/cat');
 
 describe('Updating a cat', () => {
   let cat;

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run client",
+    "start": "node src/index.js",
     "test": "mocha --timeout 10000 --exit",
     "server": "nodemon src/index.js",
     "client": "npm start --prefix client",
@@ -19,6 +19,7 @@
     "express": "^4.16.4",
     "mongodb": "^3.1.10",
     "mongoose": "^5.3.16",
+    "realm": "^10.0.0-beta.6",
     "uuid": "^8.3.0",
     "validator": "^10.9.0"
   },

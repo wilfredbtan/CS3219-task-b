@@ -4,9 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const instance = axios.create({
-  // baseURL: process.env.SERVER_URL,
-  // baseURL: 'http://localhost:5000',
-  baseURL: 'https://wilfred-cat-manager.herokuapp.com',
+  baseURL: process.env.SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
   },

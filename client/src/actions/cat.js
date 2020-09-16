@@ -62,15 +62,11 @@ export const deleteCat = (id) => (dispatch) => {
 };
 
 export const updateCat = (name, breed, id) => (dispatch) => {
-  console.log('updated cat: ' + name);
-  console.log('updated cat id: ' + id);
-  // Change to take in an input
   const body = JSON.stringify({ name, breed });
 
   axios
     .patch('/cats/' + id, body)
     .then((response) => {
-      console.log('reached');
       const { name, breed, _id } = response.data;
       const updatedCat = { name, breed, id: _id };
 

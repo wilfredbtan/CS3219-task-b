@@ -34,7 +34,6 @@ const updateCat = (state, { updatedCat }) => {
 };
 
 const selectCat = (state, { selectedCat }) => {
-  console.log('selected reducer id ' + selectedCat.id);
   return updateObject(state, { selectedCat });
 };
 

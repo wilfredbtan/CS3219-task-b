@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addCat } from '../../actions/cat';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCat, updateCat } from '../../actions/cat';
 
 import Card from '../../UI/Card';
 import './CatForm.css';
 
-const CatForm = (props) => {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredBreed, setEnteredBreed] = useState('');
+const CatForm = ({ action, onSubmit }) => {
+  const selectedCat = useSelector((state) => state.cat.selectedCat);
+
+  // console.log('catId in form');
+  // console.log(selectedCat);
+
+  const [enteredName, setEnteredName] = useState(
+    selectedCat ? selectedCat.name : ''
+  );
+  const [enteredBreed, setEnteredBreed] = useState(
+    selectedCat ? selectedCat.breed : ''
+  );
 
   const dispatch = useDispatch();
 
-  const onCatAdded = (name, breed) => dispatch(addCat(name, breed));
-
   const submitHandler = (e) => {
     e.preventDefault();
-    onCatAdded(enteredName, enteredBreed);
+    switch (action.toLowerCase()) {
+      case 'add':
+        dispatch(addCat(enteredName, enteredBreed));
+      case 'update':
+        console.log('update cat action');
+        dispatch(updateCat(enteredName, enteredBreed, selectedCat.id));
+        onSubmit();
+        break;
+    }
   };
 
   return (
@@ -43,7 +58,7 @@ const CatForm = (props) => {
                 setEnteredBreed(event.target.value);
               }}
             />
-            <input type="submit" value="Add" />
+            <input type="submit" value={action} />
           </div>
         </form>
       </Card>

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import CatForm from '../containers/CatForm/CatForm';
+
 const Modal = ({ isShowing, hide }) =>
   isShowing
     ? ReactDOM.createPortal(
@@ -25,7 +27,7 @@ const Modal = ({ isShowing, hide }) =>
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <p>Hello, I'm a modal.</p>
+              <CatForm action={'Update'} onSubmit={hide} />
             </div>
           </div>
         </React.Fragment>,

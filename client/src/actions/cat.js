@@ -39,7 +39,7 @@ export const addCat = (name, breed) => (dispatch) => {
 
       dispatch({
         type: actionTypes.ADD_CAT,
-        payload: { cat: addedCat },
+        payload: { addedCat },
       });
     })
     .catch((error) => {
@@ -61,13 +61,16 @@ export const deleteCat = (id) => (dispatch) => {
     });
 };
 
-export const updateCat = (id) => (dispatch) => {
+export const updateCat = (name, breed, id) => (dispatch) => {
+  console.log('updated cat: ' + name);
+  console.log('updated cat id: ' + id);
   // Change to take in an input
-  const body = JSON.stringify({ name: 'updated', breed: 'updated' });
+  const body = JSON.stringify({ name, breed });
 
   axios
     .patch('/cats/' + id, body)
     .then((response) => {
+      console.log('reached');
       const { name, breed, _id } = response.data;
       const updatedCat = { name, breed, id: _id };
 
@@ -79,4 +82,11 @@ export const updateCat = (id) => (dispatch) => {
     .catch((error) => {
       console.log('ERROR: Unable to update cat' + error);
     });
+};
+
+export const selectCat = (selectedCat) => (dispatch) => {
+  dispatch({
+    type: actionTypes.SELECT_CAT,
+    payload: { selectedCat },
+  });
 };

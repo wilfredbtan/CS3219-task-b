@@ -14,7 +14,7 @@ const CatList = (props) => {
               <b>{cat.name}</b> the {cat.breed}
             </span>
             <span>
-              <button onClick={props.onUpdateCat.bind(this, cat.id)}>
+              <button onClick={props.onUpdateCat.bind(this, cat)}>
                 update
               </button>
               <button onClick={props.onRemoveCat.bind(this, cat.id)}>

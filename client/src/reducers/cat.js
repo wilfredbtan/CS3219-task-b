@@ -1,20 +1,27 @@
 import * as actionTypes from '../actions/actionsTypes';
 
-const initialState = [];
+// const initialState = { cats: [], selectedCatId: null };
+const initialState = {};
+
+const updateObject = (oldObject, updatedProperties) => {
+  return {
+    ...oldObject,
+    ...updatedProperties,
+  };
+};
 
 const initCats = (state, { cats }) => {
   return updateObject(state, { cats });
 };
 
-const addCat = (state, { cat }) => {
+const addCat = (state, { addedCat }) => {
   let updatedCats = [...state.cats];
-  updatedCats.push(cat);
+  updatedCats.push(addedCat);
   return updateObject(state, { cats: updatedCats });
 };
 
 const deleteCat = (state, { id }) => {
   let updatedCats = [...state.cats].filter((cat) => cat.id !== id);
-  // console.log('delete reducer: ' + state);
   return updateObject(state, { cats: updatedCats });
 };
 
@@ -23,21 +30,20 @@ const updateCat = (state, { updatedCat }) => {
     return cat.id === updatedCat.id ? updatedCat : cat;
   });
 
-  // console.log('update reducer: ' + state);
   return updateObject(state, { cats: updatedCats });
 };
 
-export const updateObject = (oldObject, updatedProperties) => {
-  return {
-    ...oldObject,
-    ...updatedProperties,
-  };
+const selectCat = (state, { selectedCat }) => {
+  console.log('selected reducer id ' + selectedCat.id);
+  return updateObject(state, { selectedCat });
 };
 
 const reducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case actionTypes.SELECT_CAT:
+      return selectCat(state, payload);
     case actionTypes.INIT_CATS:
       return initCats(state, payload);
     case actionTypes.ADD_CAT:

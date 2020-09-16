@@ -25,9 +25,10 @@ const CatForm = ({ action, onSubmit }) => {
         dispatch(addCat(enteredName, enteredBreed));
         break;
       case 'update':
-        console.log('update cat action');
         dispatch(updateCat(enteredName, enteredBreed, selectedCat.id));
         onSubmit();
+        break;
+      default:
         break;
     }
   };

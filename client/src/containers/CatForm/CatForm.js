@@ -19,6 +19,11 @@ const CatForm = ({ action, onSubmit }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (enteredName === '' || enteredBreed === '') {
+      return;
+    }
+
     switch (action.toLowerCase()) {
       case 'add':
         console.log('add cat action');

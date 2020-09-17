@@ -2,11 +2,10 @@ language: node_js
 node_js:
   - 'stable'
 
-deploy_service_job: &DEPLOY_SERVICE_JOB
-  cache:
-    directories:
-      - node_modules
-      - ./aws-serverless/node_modules
+cache:
+  directories:
+    - node_modules
+    - ./aws-serverless/node_modules
 
 install:
   - npm install -g serverless

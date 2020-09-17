@@ -1,6 +1,21 @@
 language: node_js
 node_js:
-    - 'stable'
+  - 'stable'
+
 cache:
-    directories:
-        - 'node_modules'
+  directories:
+    - node_modules
+    - ./aws-serverless/node_modules
+
+install:
+  - npm install -g serverless
+  - travis_retry npm install
+  - cd ./aws-serverless
+  - travis_retry npm install
+  - cd -
+
+script:
+  - npm run test
+  - cd ./aws-serverless
+  - serverless deploy
+  - cd -

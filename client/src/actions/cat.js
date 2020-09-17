@@ -22,8 +22,6 @@ export const initCats = () => async (dispatch) => {
       const { body } = JSON.parse(data.Payload);
       const loadedCats = JSON.parse(body).map((cat) => replaceIdKey(cat));
 
-      // console.log(loadedCats);
-
       dispatch({
         type: actionTypes.INIT_CATS,
         payload: { cats: loadedCats },

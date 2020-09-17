@@ -1,6 +1,10 @@
 language: node_js
 node_js:
-    - 'stable'
+  - 'stable'
 cache:
-    directories:
-        - 'node_modules'
+  directories:
+    - 'node_modules'
+
+script:
+  - cd ./aws-serverless
+  - serverless deploy

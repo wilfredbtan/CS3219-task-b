@@ -70,17 +70,17 @@ module.exports.getAll = (event, context, callback) => {
 module.exports.update = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  console.log('event.pathParameters: ');
-  console.log(event.pathParameters);
+  // console.log('event.pathParameters: ');
+  // console.log(event.pathParameters);
 
-  console.log('event.pathParameters.id: ');
-  console.log(event.pathParameters.id);
+  // console.log('event.pathParameters.id: ');
+  // console.log(event.pathParameters.id);
 
-  console.log('event.body: ');
-  console.log(event.body);
+  // console.log('event.body: ');
+  // console.log(event.body);
 
-  console.log('PARSED event.body: ');
-  console.log(JSON.parse(event.body));
+  // console.log('PARSED event.body: ');
+  // console.log(JSON.parse(event.body));
 
   connectToDatabase().then(() => {
     Cat.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), {

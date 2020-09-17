@@ -7,12 +7,6 @@ const Cat = require('./cats.model.js');
 module.exports.create = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  console.log('event.body: ');
-  console.log(event.body);
-
-  console.log('PARSED event.body: ');
-  console.log(JSON.parse(event.body));
-
   connectToDatabase().then(() => {
     Cat.create(JSON.parse(event.body))
       .then((body) =>
@@ -76,6 +70,18 @@ module.exports.getAll = (event, context, callback) => {
 module.exports.update = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
+  console.log('event.pathParameters: ');
+  console.log(event.pathParameters);
+
+  console.log('event.pathParameters.id: ');
+  console.log(event.pathParameters.id);
+
+  console.log('event.body: ');
+  console.log(event.body);
+
+  console.log('PARSED event.body: ');
+  console.log(JSON.parse(event.body));
+
   connectToDatabase().then(() => {
     Cat.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), {
       new: true,
@@ -98,6 +104,12 @@ module.exports.update = (event, context, callback) => {
 
 module.exports.delete = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
+
+  // console.log('event.pathParameters.id: ');
+  // console.log(event.pathParameters.id);
+
+  // console.log('PARSED event.body: ');
+  // console.log(JSON.parse(event.body));
 
   connectToDatabase().then(() => {
     Cat.findByIdAndRemove(event.pathParameters.id)

@@ -1,4 +1,4 @@
-import axios from '../axios-cats';
+// import axios from '../axios-cats';
 
 import * as actionTypes from './actionsTypes';
 import lambda from '../lambda';
@@ -58,10 +58,8 @@ export const initCats = () => async (dispatch) => {
 
 export const addCat = (name, breed) => (dispatch) => {
   // Need both the value and and object to be a string
-  const cat = JSON.stringify({ name: name, breed: breed });
+  const cat = JSON.stringify({ name, breed });
   const body = JSON.stringify({ body: cat });
-
-  console.log(body);
 
   var params = {
     FunctionName: lambdaActions.CREATE,
@@ -72,23 +70,18 @@ export const addCat = (name, breed) => (dispatch) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('returned');
-      console.log(data);
-      // const { body } = JSON.parse(data.Payload);
-      // console.log(body);
-      // const addedCat = JSON.parse(body).map((cat) => replaceIdKey(cat));
+      const { body } = JSON.parse(data.Payload);
+      const addedCat = replaceIdKey(JSON.parse(body));
 
-      // const id = response.data._id;
-      // const addedCat = { name, breed, id };
-
-      // dispatch({
-      //   type: actionTypes.ADD_CAT,
-      //   payload: { addedCat },
-      // });
+      dispatch({
+        type: actionTypes.ADD_CAT,
+        payload: { addedCat },
+      });
     }
   });
 
   // Server Code left for reference
+  // const body = JSON.stringify({ name, breed });
   // axios
   //   .post('/cats', body)
   //   .then((response) => {
@@ -106,36 +99,81 @@ export const addCat = (name, breed) => (dispatch) => {
 };
 
 export const deleteCat = (id) => (dispatch) => {
-  axios
-    .delete('/cats/' + id)
-    .then((response) => {
+  const pathParameters = JSON.stringify({ pathParameters: { id } });
+
+  var params = {
+    FunctionName: lambdaActions.DELETE,
+    Payload: pathParameters,
+  };
+
+  lambda.invoke(params, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const { body } = JSON.parse(data.Payload);
+      const { cat } = JSON.parse(body);
+      const deletedCat = replaceIdKey(cat);
+
       dispatch({
         type: actionTypes.DELETE_CAT,
-        payload: { id },
+        payload: { id: deletedCat.id },
       });
-    })
-    .catch((error) => {
-      console.log('ERROR: Unable to delete cat' + error);
-    });
+    }
+  });
+
+  // Server Code left for reference
+  // axios
+  //   .delete('/cats/' + id)
+  //   .then((response) => {
+  //     dispatch({
+  //       type: actionTypes.DELETE_CAT,
+  //       payload: { id },
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log('ERROR: Unable to delete cat' + error);
+  //   });
 };
 
 export const updateCat = (name, breed, id) => (dispatch) => {
-  const body = JSON.stringify({ name, breed });
+  const cat = JSON.stringify({ name, breed });
+  const payload = JSON.stringify({ pathParameters: { id }, body: cat });
 
-  axios
-    .patch('/cats/' + id, body)
-    .then((response) => {
-      const { name, breed, _id } = response.data;
-      const updatedCat = { name, breed, id: _id };
+  var params = {
+    FunctionName: lambdaActions.UPDATE,
+    Payload: payload,
+  };
+
+  lambda.invoke(params, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const { body } = JSON.parse(data.Payload);
+      const updatedCat = replaceIdKey(JSON.parse(body));
 
       dispatch({
         type: actionTypes.UPDATE_CAT,
         payload: { updatedCat },
       });
-    })
-    .catch((error) => {
-      console.log('ERROR: Unable to update cat' + error);
-    });
+    }
+  });
+
+  // Server code left for reference
+  // const body = JSON.stringify({ name, breed });
+  // axios
+  //   .patch('/cats/' + id, body)
+  //   .then((response) => {
+  //     const { name, breed, _id } = response.data;
+  //     const updatedCat = { name, breed, id: _id };
+
+  //     dispatch({
+  //       type: actionTypes.UPDATE_CAT,
+  //       payload: { updatedCat },
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log('ERROR: Unable to update cat' + error);
+  //   });
 };
 
 export const selectCat = (selectedCat) => (dispatch) => {

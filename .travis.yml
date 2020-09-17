@@ -15,7 +15,7 @@ install:
   - cd -
 
 script:
+  - npm run test
   - cd ./aws-serverless
   - serverless deploy
   - cd -
-  - npm run test

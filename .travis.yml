@@ -18,3 +18,4 @@ install:
 script:
   - cd ./aws-serverless
   - serverless deploy
+  - cd -

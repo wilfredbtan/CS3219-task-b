@@ -104,13 +104,6 @@ module.exports.update = (event, context, callback) => {
 
 module.exports.delete = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
-
-  // console.log('event.pathParameters.id: ');
-  // console.log(event.pathParameters.id);
-
-  // console.log('PARSED event.body: ');
-  // console.log(JSON.parse(event.body));
-
   connectToDatabase().then(() => {
     Cat.findByIdAndRemove(event.pathParameters.id)
       .then((cat) =>

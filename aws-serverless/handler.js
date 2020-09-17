@@ -1,33 +1,11 @@
 'use strict';
 
 require('dotenv').config({ path: './variables.env' });
-const middy = require('middy');
-const { cors } = require('middy/middlewares');
 
 const connectToDatabase = require('./db');
 const Cat = require('./cats.model.js');
 
-// const wrapResponseWithCors = (object) => {
-//   return {
-//     statusCode: 200,
-//     headers: {
-//       'Access-Control-Allow-Origin': '*',
-//       'Access-Control-Allow-Credentials': true,
-//     },
-//     body: JSON.stringify(object),
-//   };
-// }
-
-// module.exports.hello = (event, context, callback) => {
-//   console.log('Hello World');
-//   callback(null, 'Hello World');
-// };
-
-const withMiddy = (handler) => {
-  return middy(handler).use(cors());
-};
-
-module.exports.create = withMiddy((event, context, callback) => {
+module.exports.create = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   connectToDatabase().then(() => {
@@ -46,9 +24,9 @@ module.exports.create = withMiddy((event, context, callback) => {
         })
       );
   });
-});
+};
 
-module.exports.getOne = withMiddy((event, context, callback) => {
+module.exports.getOne = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   connectToDatabase().then(() => {
@@ -67,9 +45,9 @@ module.exports.getOne = withMiddy((event, context, callback) => {
         })
       );
   });
-});
+};
 
-module.exports.getAll = withMiddy((event, context, callback) => {
+module.exports.getAll = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   connectToDatabase().then(() => {
@@ -88,9 +66,9 @@ module.exports.getAll = withMiddy((event, context, callback) => {
         })
       );
   });
-});
+};
 
-module.exports.update = withMiddy((event, context, callback) => {
+module.exports.update = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   connectToDatabase().then(() => {
@@ -111,9 +89,9 @@ module.exports.update = withMiddy((event, context, callback) => {
         })
       );
   });
-});
+};
 
-module.exports.delete = withMiddy((event, context, callback) => {
+module.exports.delete = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   connectToDatabase().then(() => {
@@ -135,4 +113,4 @@ module.exports.delete = withMiddy((event, context, callback) => {
         })
       );
   });
-});
+};

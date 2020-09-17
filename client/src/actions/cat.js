@@ -2,35 +2,61 @@
 import axios from '../axios-cats';
 
 import * as actionTypes from './actionsTypes';
+import lambda from '../lambda';
 
 export const initCats = () => async (dispatch) => {
-  axios
-    .get('/cats')
-    .then((response) => {
-      const responseData = response.data;
+  var params = {
+    FunctionName: 'aws-serverless-dev-getAll',
+  };
 
-      const loadedCats = [];
-      for (const key in responseData) {
-        loadedCats.push({
-          id: responseData[key]._id,
-          name: responseData[key].name,
-          breed: responseData[key].breed,
-        });
-      }
+  lambda.invoke(params, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const { body } = JSON.parse(data.Payload);
+      const responseData = JSON.parse(body);
+      const loadedCats = responseData.map((cat) => {
+        cat['id'] = cat['_id'];
+        delete cat['_id'];
+        return cat;
+      });
 
       dispatch({
         type: actionTypes.INIT_CATS,
         payload: { cats: loadedCats },
       });
-    })
-    .catch((error) => {
-      console.log('ERROR: Unable to get cat' + error);
-    });
+    }
+  });
+
+  // Server Code left for reference
+  // axios
+  //   .get('/cats')
+  //   .then((response) => {
+  //     const responseData = response.data;
+
+  //     const loadedCats = [];
+  //     for (const key in responseData) {
+  //       loadedCats.push({
+  //         id: responseData[key]._id,
+  //         name: responseData[key].name,
+  //         breed: responseData[key].breed,
+  //       });
+  //     }
+
+  //     dispatch({
+  //       type: actionTypes.INIT_CATS,
+  //       payload: { cats: loadedCats },
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log('ERROR: Unable to get cat' + error);
+  //   });
 };
 
 export const addCat = (name, breed) => (dispatch) => {
   const body = JSON.stringify({ name, breed });
 
+  // Server Code left for reference
   axios
     .post('/cats', body)
     .then((response) => {

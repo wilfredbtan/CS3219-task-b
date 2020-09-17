@@ -1,19 +1,24 @@
 'use strict';
 
 require('dotenv').config({ path: './variables.env' });
-
 const connectToDatabase = require('./db');
 const Cat = require('./cats.model.js');
 
 module.exports.create = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
+  console.log('event.body: ');
+  console.log(event.body);
+
+  console.log('PARSED event.body: ');
+  console.log(JSON.parse(event.body));
+
   connectToDatabase().then(() => {
     Cat.create(JSON.parse(event.body))
-      .then((cat) =>
+      .then((body) =>
         callback(null, {
           statusCode: 200,
-          body: JSON.stringify(cat),
+          body: JSON.stringify(body),
         })
       )
       .catch((err) =>

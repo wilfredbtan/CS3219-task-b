@@ -1,12 +1,18 @@
-// import axios from 'axios';
 import axios from '../axios-cats';
 
 import * as actionTypes from './actionsTypes';
 import lambda from '../lambda';
+import * as lambdaActions from './lambdaActions';
+
+const replaceIdKey = (cat) => {
+  cat['id'] = cat['_id'];
+  delete cat['_id'];
+  return cat;
+};
 
 export const initCats = () => async (dispatch) => {
   var params = {
-    FunctionName: 'aws-serverless-dev-getAll',
+    FunctionName: lambdaActions.GET_ALL,
   };
 
   lambda.invoke(params, (err, data) => {
@@ -14,12 +20,9 @@ export const initCats = () => async (dispatch) => {
       console.log(err);
     } else {
       const { body } = JSON.parse(data.Payload);
-      const responseData = JSON.parse(body);
-      const loadedCats = responseData.map((cat) => {
-        cat['id'] = cat['_id'];
-        delete cat['_id'];
-        return cat;
-      });
+      const loadedCats = JSON.parse(body).map((cat) => replaceIdKey(cat));
+
+      // console.log(loadedCats);
 
       dispatch({
         type: actionTypes.INIT_CATS,
@@ -54,23 +57,52 @@ export const initCats = () => async (dispatch) => {
 };
 
 export const addCat = (name, breed) => (dispatch) => {
-  const body = JSON.stringify({ name, breed });
+  // Need both the value and and object to be a string
+  const cat = JSON.stringify({ name: name, breed: breed });
+  const body = JSON.stringify({ body: cat });
+
+  console.log(body);
+
+  var params = {
+    FunctionName: lambdaActions.CREATE,
+    Payload: body,
+  };
+
+  lambda.invoke(params, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('returned');
+      console.log(data);
+      // const { body } = JSON.parse(data.Payload);
+      // console.log(body);
+      // const addedCat = JSON.parse(body).map((cat) => replaceIdKey(cat));
+
+      // const id = response.data._id;
+      // const addedCat = { name, breed, id };
+
+      // dispatch({
+      //   type: actionTypes.ADD_CAT,
+      //   payload: { addedCat },
+      // });
+    }
+  });
 
   // Server Code left for reference
-  axios
-    .post('/cats', body)
-    .then((response) => {
-      const id = response.data._id;
-      const addedCat = { name, breed, id };
+  // axios
+  //   .post('/cats', body)
+  //   .then((response) => {
+  //     const id = response.data._id;
+  //     const addedCat = { name, breed, id };
 
-      dispatch({
-        type: actionTypes.ADD_CAT,
-        payload: { addedCat },
-      });
-    })
-    .catch((error) => {
-      console.log('ERROR: Unable to create cat' + error);
-    });
+  //     dispatch({
+  //       type: actionTypes.ADD_CAT,
+  //       payload: { addedCat },
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log('ERROR: Unable to create cat' + error);
+  //   });
 };
 
 export const deleteCat = (id) => (dispatch) => {

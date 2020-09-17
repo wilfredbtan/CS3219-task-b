@@ -18,3 +18,4 @@ script:
   - cd ./aws-serverless
   - serverless deploy
   - cd -
+  - npm run test

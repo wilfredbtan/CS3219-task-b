@@ -135,6 +135,7 @@ export const deleteCat = (id) => (dispatch) => {
 };
 
 export const updateCat = (name, breed, id) => (dispatch) => {
+  // Need both the value and and object to be a string
   const cat = JSON.stringify({ name, breed });
   const payload = JSON.stringify({ pathParameters: { id }, body: cat });
 

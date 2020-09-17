@@ -33,9 +33,26 @@ const CatManager = () => {
     });
   };
 
+  const getCats = () => {
+    var params = {
+      FunctionName: 'aws-serverless-dev-getAll',
+    };
+
+    lambda.invoke(params, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const { body } = JSON.parse(data.Payload);
+        // setRandomCatName(body);
+        console.log(body);
+      }
+    });
+  };
+
   useEffect(() => {
     dispatch(initCats());
     generateCatName();
+    getCats();
   }, []);
 
   const updateCatHandler = (cat) => {

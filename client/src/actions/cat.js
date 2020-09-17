@@ -13,6 +13,7 @@ const replaceIdKey = (cat) => {
 export const initCats = () => async (dispatch) => {
   var params = {
     FunctionName: lambdaActions.GET_ALL,
+    Payload: '',
   };
 
   lambda.invoke(params, (err, data) => {

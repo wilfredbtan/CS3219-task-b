@@ -3,8 +3,6 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-console.log('TEST_URL ' + process.env.MONGODB_TEST_URL);
-
 mongoose.connect(process.env.MONGODB_TEST_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,

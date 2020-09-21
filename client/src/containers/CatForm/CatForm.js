@@ -35,6 +35,9 @@ const CatForm = ({ action, onSubmit }) => {
       default:
         break;
     }
+
+    setEnteredName('');
+    setEnteredBreed('');
   };
 
   return (

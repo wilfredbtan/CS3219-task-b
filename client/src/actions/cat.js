@@ -10,6 +10,7 @@ const replaceIdKey = (cat) => {
 };
 
 export const initCats = () => async (dispatch) => {
+  console.log('Initialising cats...');
   if (process.env.NODE_ENV !== 'development') {
     var params = {
       FunctionName: lambdaActions.GET_ALL,
@@ -56,6 +57,7 @@ export const initCats = () => async (dispatch) => {
 };
 
 export const addCat = (name, breed) => (dispatch) => {
+  console.log(`Adding ${name} the ${breed}...`);
   if (process.env.NODE_ENV !== 'development') {
     // Need both the value and and object to be a string
     const cat = JSON.stringify({ name, breed });
@@ -99,6 +101,7 @@ export const addCat = (name, breed) => (dispatch) => {
 };
 
 export const deleteCat = (id) => (dispatch) => {
+  console.log(`Deleting cat`);
   if (process.env.NODE_ENV !== 'development') {
     const pathParameters = JSON.stringify({ pathParameters: { id } });
 
@@ -137,6 +140,7 @@ export const deleteCat = (id) => (dispatch) => {
 };
 
 export const updateCat = (name, breed, id) => (dispatch) => {
+  console.log(`Updating ${name} the ${breed}`);
   if (process.env.NODE_ENV !== 'development') {
     // Need both the value and and object to be a string
     const cat = JSON.stringify({ name, breed });

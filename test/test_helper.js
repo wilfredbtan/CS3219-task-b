@@ -9,8 +9,6 @@ mongoose.connect(process.env.MONGODB_TEST_URL, {
   useFindAndModify: false,
 });
 
-console.log(mongoose.connection.collections);
-
 beforeEach((done) => {
   mongoose.connection.collections.cats.drop(() => {
     done();

@@ -26,7 +26,6 @@ const CatForm = ({ action, onSubmit }) => {
 
     switch (action.toLowerCase()) {
       case 'add':
-        console.log('add cat action');
         dispatch(addCat(enteredName, enteredBreed));
         break;
       case 'update':

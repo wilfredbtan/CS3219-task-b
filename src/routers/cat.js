@@ -38,7 +38,7 @@ router.get('/cats/:id', async (req, res) => {
   }
 });
 
-router.patch('/cats/:id', async (req, res) => {
+router.put('/cats/:id', async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ['name', 'breed'];
   const isValidOperation = updates.every((update) =>

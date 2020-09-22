@@ -4,6 +4,11 @@ require('dotenv').config({ path: './variables.env' });
 const connectToDatabase = require('./db');
 const Cat = require('./cats.model.js');
 
+const corsHeaders = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+};
+
 module.exports.create = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
@@ -13,6 +18,7 @@ module.exports.create = (event, context, callback) => {
         callback(null, {
           statusCode: 200,
           body: JSON.stringify(body),
+          headers: corsHeaders,
         })
       )
       .catch((err) =>
@@ -34,6 +40,7 @@ module.exports.getOne = (event, context, callback) => {
         callback(null, {
           statusCode: 200,
           body: JSON.stringify(cat),
+          headers: corsHeaders,
         })
       )
       .catch((err) =>
@@ -55,6 +62,7 @@ module.exports.getAll = (event, context, callback) => {
         callback(null, {
           statusCode: 200,
           body: JSON.stringify(cats),
+          headers: corsHeaders,
         })
       )
       .catch((err) =>
@@ -70,18 +78,6 @@ module.exports.getAll = (event, context, callback) => {
 module.exports.update = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  // console.log('event.pathParameters: ');
-  // console.log(event.pathParameters);
-
-  // console.log('event.pathParameters.id: ');
-  // console.log(event.pathParameters.id);
-
-  // console.log('event.body: ');
-  // console.log(event.body);
-
-  // console.log('PARSED event.body: ');
-  // console.log(JSON.parse(event.body));
-
   connectToDatabase().then(() => {
     Cat.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), {
       new: true,
@@ -90,6 +86,7 @@ module.exports.update = (event, context, callback) => {
         callback(null, {
           statusCode: 200,
           body: JSON.stringify(cat),
+          headers: corsHeaders,
         })
       )
       .catch((err) =>
@@ -113,6 +110,7 @@ module.exports.delete = (event, context, callback) => {
             message: 'Removed cat with id: ' + cat._id,
             cat: cat,
           }),
+          headers: corsHeaders,
         })
       )
       .catch((err) =>

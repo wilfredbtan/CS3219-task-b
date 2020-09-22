@@ -167,7 +167,7 @@ export const updateCat = (name, breed, id) => (dispatch) => {
   } else {
     const body = JSON.stringify({ name, breed });
     axios
-      .patch('/cats/' + id, body)
+      .put('/cats/' + id, body)
       .then((response) => {
         const { name, breed, _id } = response.data;
         const updatedCat = { name, breed, id: _id };
